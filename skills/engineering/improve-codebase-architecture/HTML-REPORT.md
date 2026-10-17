@@ -10,7 +10,7 @@ The architectural review is rendered as a single self-contained HTML file in the
   <head>
     <meta charset="utf-8" />
     <title>Architecture review for {{repo name}}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
     <script type="module">
       import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs";
       mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "strict" });
@@ -97,7 +97,7 @@ Before: a tree of function calls rendered as nested boxes. After: the same tree 
 - Colour sparingly: one accent (emerald or indigo) plus red for leakage and amber for warnings.
 - Keep diagrams ~320px tall so before/after sits comfortably side by side without scrolling.
 - Use `text-xs uppercase tracking-wider` for module labels inside diagrams, so they read as schematic, not as UI.
-- The only scripts are the Tailwind CDN and the Mermaid ESM import, pinned to an exact version with `securityLevel: "strict"`: diagram labels come from repo content, so they must never render as HTML. The report is otherwise static: no app code, no interactivity beyond Mermaid's own rendering.
+- The only scripts are the Tailwind CDN and the Mermaid ESM import, both pinned to an exact version with `securityLevel: "strict"`: diagram labels come from repo content, so they must never render as HTML. The report is otherwise static: no app code, no interactivity beyond Mermaid's own rendering.
 
 ## Top recommendation section
 

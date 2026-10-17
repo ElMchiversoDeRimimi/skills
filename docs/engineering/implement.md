@@ -2,7 +2,7 @@
 
 `implement` builds work that has already been decided. You point it at a [ticket](https://www.aihero.dev/ai-coding-dictionary/ticket), a [spec](https://www.aihero.dev/ai-coding-dictionary/spec), or the plan you just agreed in the conversation, and it writes the code, drives [tdd](https://aihero.dev/skills-tdd) at the seams, typechecks as it goes, pushes the work to a branch with a pull request, and posts a [code-review-3axis](https://aihero.dev/skills-code-review-3axis) report on that PR.
 
-It never reopens the plan. There is no interview, no clarifying round, no proposal of a different approach. Whatever was settled upstream is the input, and the skill's whole job is to turn that into a PR you can review. It never merges: you do. That is what separates it from typing "build this" at a fresh [agent](https://www.aihero.dev/ai-coding-dictionary/agent), which often redesigns the work while it builds it.
+It never reopens the plan. There is no interview, no clarifying round, no proposal of a different approach. Whatever was settled upstream is the input, and the skill's whole job is to turn that into a PR you can review. It never merges: you do. That is what separates it from typing "build this" at a fresh [agent](https://www.aihero.dev/ai-coding-dictionary/agent), which often redesigns the work while it builds it. It also stops and asks you at every checkpoint in your repo's `docs/agents/checkpoints.md` (direction, architecture, new dependencies, human-only steps where it recommends [wizard](https://aihero.dev/skills-wizard), critical review findings, merging).
 
 ## When to reach for it
 

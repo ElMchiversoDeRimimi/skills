@@ -1,3 +1,5 @@
 # Deprecated
 
-Skills I no longer use. This bucket is currently empty: a retired skill is deleted, and the changeset that removes it names whatever replaced it.
+Skills I no longer use. The enable script never installs anything from this bucket.
+
+- **[scaffold-exercises](./scaffold-exercises/SKILL.md)**: Create exercise directory structures for AI Hero courses. Deprecated in this fork: it depends on the course-internal `ai-hero-cli` and has no use outside those courses.

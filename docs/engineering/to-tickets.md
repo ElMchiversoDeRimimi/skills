@@ -30,6 +30,8 @@ This is the rule people break most often. One team ran a 26-ticket stack sliced 
 
 Two things happen before anything is published. `to-tickets` looks for prefactoring (the principle "make the change easy, then make the easy change") and orders that work first. Then it presents the breakdown as a numbered list and quizzes you on it: is the granularity right, are the blocking edges real, should anything merge or split. Nothing reaches the tracker until you approve, and that quiz is the place to push back.
 
+If the repo has no CI running its checks on PRs, the first ticket adds it, from the CI seed that ships with [setup-matt-pocock-skills](https://aihero.dev/skills-setup-matt-pocock-skills), so every later ticket's PR shows a pass or fail.
+
 ## Blocking edges
 
 The edges are the point of the artifact. They work in two ways, depending on the tracker:

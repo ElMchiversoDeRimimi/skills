@@ -29,6 +29,8 @@ You record the **answer** (the verdict plus the question it settled) somewhere p
 
 The **prototype** is the runnable evidence the answer came from, and you do not delete it. It doesn't belong in main either, because nobody maintains it and it goes stale fast. So you commit it to a throwaway `prototype/<name>` branch out of main, never merge it, and leave a [context pointer](https://www.aihero.dev/ai-coding-dictionary/context-pointer) to that branch on the implementation issue. Main stays clean, and whoever picks the work up next can find and re-run the prototype.
 
+When the prototype was built without you there (for example, an agent working a [wayfinder](https://aihero.dev/skills-wayfinder) ticket on its own), the branch also gets a place for you to react: the agent pushes it and opens a **draft** PR titled `Prototype: <question> (do not merge)`, with the question and how to run it in the body. You leave your reactions on that PR, and [pr-feedback](https://aihero.dev/skills-pr-feedback) iterates on it like any other.
+
 ## Common questions
 
 **Wait, isn't the prototype supposed to be deleted?**

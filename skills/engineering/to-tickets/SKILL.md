@@ -34,6 +34,7 @@ Break the work into **tracer bullet** tickets.
 - A completed slice is demoable or verifiable on its own
 - Each slice is sized to fit in a single fresh context window
 - Any prefactoring should be done first
+- If the repo has no CI running its checks on PRs, the first ticket adds it, from the `ci-github.md` seed in the `setup-matt-pocock-skills` skill folder
 
 </vertical-slice-rules>
 

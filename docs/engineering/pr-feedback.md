@@ -2,7 +2,7 @@
 
 `pr-feedback` takes the comments you left on a pull request and works through them on the PR's branch. It reads every review summary, conversation comment, and inline code comment, decides for each one whether it calls for a code change, an answer, or a pushback, makes the changes, replies to each comment where you left it, and runs a fresh [code-review-3axis](https://aihero.dev/skills-code-review-3axis) on the result.
 
-It reports back in the PR, not in the chat. Every change, answer, and pushback lands as a reply on the comment that asked for it, so you review the next iteration in the same place you left the feedback. It never resolves your threads and never merges: you decide when a thread is done and when the PR goes in.
+It reports back in the PR, not in the chat. Every change, answer, and pushback lands as a reply on the comment that asked for it, so you review the next iteration in the same place you left the feedback. It never resolves your threads and never merges: you decide when a thread is done and when the PR goes in. If a comment leads to a checkpoint in your repo's `docs/agents/checkpoints.md` (direction, architecture, new dependencies, human-only steps where it recommends [wizard](https://aihero.dev/skills-wizard), critical review findings, merging), it stops and asks you instead of deciding.
 
 ## When to reach for it
 
