@@ -30,6 +30,8 @@ This is the rule people break most often. One team ran a 26-ticket stack sliced 
 
 Two things happen before anything is published. `to-tickets` looks for prefactoring (the principle "make the change easy, then make the easy change") and orders that work first. Then it presents the breakdown as a numbered list and quizzes you on it: is the granularity right, are the blocking edges real, should anything merge or split. Nothing reaches the tracker until you approve, and that quiz is the place to push back.
 
+If the repo has no CI running its checks on PRs, the first ticket adds it, from the CI seed that ships with [setup-matt-pocock-skills](https://aihero.dev/skills-setup-matt-pocock-skills), so every later ticket's PR shows a pass or fail.
+
 ## Blocking edges
 
 The edges are the point of the artifact. They work in two ways, depending on the tracker:
@@ -93,7 +95,7 @@ The skill stops at the artifact, and there is no auto-dispatch mode. Dispatch is
 `to-tickets` is a step in the main build chain:
 
 ```txt
-grill-with-docs → to-spec → to-tickets → implement → code-review → retro
+grill-with-docs → to-spec → to-tickets → implement → code-review-3axis → pr-feedback → retro
 ```
 
-Upstream is [to-spec](https://aihero.dev/skills-to-spec), which hands it a settled spec to slice against. Keep both in one context window, with no clear between them. Downstream is [implement](https://aihero.dev/skills-implement), which builds one ticket per fresh session, driving [tdd](https://aihero.dev/skills-tdd) for the tests and closing with [code-review](https://aihero.dev/skills-code-review). [implement-spec](https://aihero.dev/skills-implement-spec) is the other way down. It reads the same blocking edges as a task graph and builds every ready ticket in parallel on one integration branch. When you're unsure which skill or flow fits, [ask-matt](https://aihero.dev/skills-ask-matt) routes you.
+Upstream is [to-spec](https://aihero.dev/skills-to-spec), which hands it a settled spec to slice against. Keep both in one context window, with no clear between them. Downstream is [implement](https://aihero.dev/skills-implement), which builds one ticket per fresh session, driving [tdd](https://aihero.dev/skills-tdd) for the tests and closing with [code-review-3axis](https://aihero.dev/skills-code-review-3axis). [implement-spec](https://aihero.dev/skills-implement-spec) is the other way down. It reads the same blocking edges as a task graph and builds every ready ticket in parallel on one integration branch. When you're unsure which skill or flow fits, [ask-matt](https://aihero.dev/skills-ask-matt) routes you.

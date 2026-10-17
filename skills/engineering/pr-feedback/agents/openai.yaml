@@ -1,0 +1,5 @@
+interface:
+  display_name: "PR Feedback"
+  short_description: "Address the reviewer's PR comments and iterate"
+policy:
+  allow_implicit_invocation: false

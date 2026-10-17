@@ -63,7 +63,7 @@ Yes. Say so when you invoke it ("don't grill me, just show the report"). This is
 
 **The report opened as unstyled raw HTML with no diagrams. What happened?**
 
-The report loads Tailwind and Mermaid from CDNs, so it needs network access when you open it. If something blocks those scripts, the page breaks with no error. In the reported case, a security hook required SRI hashes. The agent added them, but the CDN served different bytes to the browser than to the `curl` that computed the hash, so the browser blocked the script. Offline and locked-down environments have the same problem. The agent cannot see it, because it never renders the page. As a workaround, ask for inline CSS and hand-built SVG diagrams instead of the CDN setup. This is an open issue.
+The report loads Tailwind and Mermaid from CDNs, so it needs network access when you open it. If something blocks those scripts, the page breaks with no error. Offline and locked-down environments hit this, and the agent cannot see it, because it never renders the page. Mermaid is now pinned to an exact version (11.4.1) rather than a floating `@11` tag, and initialised with `securityLevel: "strict"`, because diagram labels come from repo content and must never render as HTML. A pinned version also gives a security hook that demands SRI hashes stable bytes to hash. Tailwind is pinned the same way, to 3.4.16. If your environment blocks CDNs entirely, ask for inline CSS and hand-built SVG diagrams instead.
 
 **It gave me twelve candidates. Do I work through them in the same session or start a new one?**
 

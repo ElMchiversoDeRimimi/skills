@@ -6,13 +6,13 @@ The summary is a visual, not a paragraph. A default PR body describes the diff i
 
 ## When to reach for it
 
-Type `/pr`, or the agent reaches for it automatically whenever it is writing a PR body.
+You invoke this by typing `/pr`, and the agent won't reach for it on its own. In this fork it is user-invoked: type it when you want a PR body shaped, including the one `implement` wrote.
 
 | Your situation | Reach for |
 | --- | --- |
 | A branch is ready and needs a body a reviewer can scan | `pr` |
-| The code is written but nobody has reviewed it yet | [code-review](https://aihero.dev/skills-code-review) first, then `pr` |
-| The PR is open and review comments are coming back | Nothing in this set yet; `pr` only writes the body |
+| The code is written but nobody has reviewed it yet | [code-review-3axis](https://aihero.dev/skills-code-review-3axis) first, then `pr` |
+| The PR is open and review comments are coming back | [pr-feedback](https://aihero.dev/skills-pr-feedback); `pr` only writes the body |
 
 ## The template
 
@@ -32,7 +32,7 @@ Not blindly, and that is the point of stating it. The agent that wrote the chang
 
 **Does it open the PR for me?**
 
-No. `pr` covers only the body. [implement](https://aihero.dev/skills-implement) ends by committing to the current branch. Requests for a skill or option that opens the PR (a `/to-pr`, or `implement` opening a PR instead of committing) are still open proposals. One user's workaround is a one-sentence local override of `implement` that tells it to open a PR. [implement-spec](https://aihero.dev/skills-implement-spec) is the exception: it opens a draft PR when your issue tracker closes work through PRs or when you ask for one. Because `pr` is model-invoked, the agent uses this shape for the body whenever you ask it to open a PR.
+No. `pr` covers only the body. Opening the PR is [implement](https://aihero.dev/skills-implement)'s job, and [implement-spec](https://aihero.dev/skills-implement-spec)'s: both push a branch and open a PR (what changed, how it was verified, `Closes #<n>`), and neither ever merges. Because `pr` is user-invoked, those bodies don't take this shape unless you type `/pr` to reshape one. Merging stays with you regardless: git and `gh` writes are gated outside the skills by a `repo-guard` hook plus `~/.claude/allowed-repos.txt`, and agents can never merge or push to `main`/`master`.
 
 **Won't it just produce another wall of text and diagrams?**
 
@@ -48,11 +48,11 @@ The output is a markdown PR body, not an HTML page. GitHub and GitLab render Mer
 
 **Can it sort through the review comments that come back?**
 
-No. It writes the body and stops. Users have asked more than once for a way to triage comments from other developers or review bots (which are worth acting on, which are non-issues). This skill does not do that.
+No. It writes the body and stops. [pr-feedback](https://aihero.dev/skills-pr-feedback) is the skill for that: it reads your comments on the PR, addresses them on the branch, and replies to each. It acts only on comments from the repo's owners, members, and collaborators, so it is not a triage tool for comments from outside contributors or review bots.
 
 **Does it keep the body up to date as the PR changes?**
 
-No. It writes the body at one point in time, and a PR that changes under review leaves that body stale. Ask the agent to rewrite the body after a large change. The agent is writing a PR body again, so it uses the same shape.
+No. It writes the body at one point in time, and a PR that changes under review leaves that body stale. Type `/pr` again after a large change to rewrite it in the same shape.
 
 **My change has no UI. What goes in Evidence?**
 
@@ -71,9 +71,10 @@ Not by itself. One user's approach is a standing instruction in the repo's agent
 
 ## Where it fits
 
-`pr` comes between review and retro when the build ships as a pull request: `to-spec → to-tickets → implement → code-review → pr → retro`. It is model-invoked, so it also fires on its own any time the agent writes a PR body outside that chain.
+`pr` comes between review and retro when the build ships as a pull request: `to-spec → to-tickets → implement → code-review-3axis → pr → retro`. It is user-invoked, so it runs only when you type it, inside that chain or outside it.
 
-- [code-review](https://aihero.dev/skills-code-review) runs before it, because a PR body should describe a diff that has already been reviewed.
-- [implement](https://aihero.dev/skills-implement) produces the commits the body describes.
+- [code-review-3axis](https://aihero.dev/skills-code-review-3axis) runs before it, because a PR body should describe a diff that has already been reviewed.
+- [implement](https://aihero.dev/skills-implement) opens the PR and produces the commits the body describes.
+- [pr-feedback](https://aihero.dev/skills-pr-feedback) takes over once review comments arrive.
 
 [ask-matt](https://aihero.dev/skills-ask-matt) routes across the whole set when you are unsure which skill the situation wants.

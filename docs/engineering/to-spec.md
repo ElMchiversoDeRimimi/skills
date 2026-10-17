@@ -31,7 +31,7 @@ So the spec does not validate or decide anything. It records what you decided, i
 
 Before it writes anything, `to-spec` sketches the **seams** where the feature will be tested, and checks them with you. It prefers existing seams to new ones, and picks the highest seam it can. The ideal number of seams for a change is one.
 
-Other skills use those agreed seams later. [tdd](https://aihero.dev/skills-tdd) works only at seams you agreed in advance. [code-review](https://aihero.dev/skills-code-review) reviews the diff against the spec, so a seam nobody agreed to shows up as a review finding. Both connections go through this document. That is why you should take the seam conversation seriously here, and not leave it for implementation.
+Other skills use those agreed seams later. [tdd](https://aihero.dev/skills-tdd) works only at seams you agreed in advance. [code-review-3axis](https://aihero.dev/skills-code-review-3axis) reviews the diff against the spec, so a seam nobody agreed to shows up as a review finding. Both connections go through this document. That is why you should take the seam conversation seriously here, and not leave it for implementation.
 
 ## Common questions
 
@@ -75,7 +75,7 @@ A tracker issue may not return a very large spec in full, and there is no local 
 `to-spec` is a step in the main build chain, but only on the multi-session branch of it:
 
 ```txt
-grill-with-docs → to-spec → to-tickets → implement → code-review → retro
+grill-with-docs → to-spec → to-tickets → implement → code-review-3axis → pr-feedback → retro
 ```
 
 Upstream, [grill-with-docs](https://aihero.dev/skills-grill-with-docs) makes the decisions that this skill only records, and a finished [wayfinder](https://aihero.dev/skills-wayfinder) map joins the chain here. Downstream, [to-tickets](https://aihero.dev/skills-to-tickets) cuts the spec into tracer-bullet tickets for [implement](https://aihero.dev/skills-implement) to build. When you're unsure which skill or flow fits, [ask-matt](https://aihero.dev/skills-ask-matt) routes you.

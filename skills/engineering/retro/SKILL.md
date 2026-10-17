@@ -10,7 +10,7 @@ The user has asked for a **retrospective**. You are suggesting improvements to t
 
 1. Call the Skill tool with `writing-for-agents` for the writing style guide.
 
-2. Read the primary sources for the session the user specifies. This may mean searching through session logs on this machine. If the user doesn't specify a session, default to the current one.
+2. Read the primary source for the session: the current conversation plus the transcripts of the subagents it launched (they belong to the same session), or a session log file the user names explicitly by path. Never search or browse other sessions' logs on this machine: they hold other projects' data. When you quote a log, write `<REDACTED>` in place of secrets and personal data.
 
 3. Look for candidates for improvement in these categories.
 
@@ -23,6 +23,8 @@ The user has asked for a **retrospective**. You are suggesting improvements to t
 - **Information access**: look for opportunities to increase the agent's access to information. Teeing dev server logs, readonly access to third-party services. _Use when_ a crucial piece of information was not available to the agent.
 
 4. Present these candidates to the user, in order of severity.
+
+5. Implement only the candidates the user picks, on a branch, and open a PR for them (the same loop as `/implement`: the user reviews and merges, feedback goes through `/pr-feedback`). Nothing changes without a pick.
 
 ## Reference
 

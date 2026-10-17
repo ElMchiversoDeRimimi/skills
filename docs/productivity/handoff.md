@@ -29,7 +29,7 @@ Three of the five options at a phase boundary preserve different things: `/compa
 
 ## What travels, and what doesn't
 
-The document carries the live thread (what's in flight, why, and what's next) plus a **suggested skills** section naming what the next agent should reach for. The skill redacts secrets before it writes the file.
+The document carries the live thread (what's in flight, why, and what's next) plus a **suggested skills** section naming what the next agent should reach for. The skill redacts before it writes the file: API keys, passwords, tokens, and personal data about customers or employees. People appear by role ("the customer", "the on-call engineer"), never by name or contact details, so the file is safe to send to a colleague or another harness.
 
 It deliberately does not carry anything already written down. The document references specs, plans, ADRs, issues, commits and diffs by path or URL, and never copies them. That keeps the file small, and it keeps the settled detail in one place instead of two copies that drift apart.
 
@@ -69,7 +69,7 @@ Both work; they suit different situations. As a skill, it ships and updates thro
 - The fresh agent starts working instead of asking you to re-explain the setup.
 - In the fork case, your original session is unchanged when you come back to it.
 - The suggested-skills section names the skill you'd have reached for yourself.
-- Nothing in it is a key, a token, or a password.
+- Nothing in it is a key, a token, or a password, and nobody in it is named: customers and colleagues appear by role.
 
 ## Where it fits
 

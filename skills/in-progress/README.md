@@ -2,12 +2,13 @@
 
 Beta. These skills are public on purpose: try them and tell me what breaks. They're excluded from the plugin and the top-level README until they graduate to a stable bucket, they get no docs pages, and they can change or disappear without warning.
 
-The plugin won't give you these. Install one directly:
+Enable one in a repo with this fork's script:
 
 ```bash
-npx skills@latest add mattpocock/skills --skill=<name>
+scripts/enable-skills.sh <path-to-repo> <name>
 ```
 
+- **[chief-of-staff](./chief-of-staff/SKILL.md)**: Drive one long-running goal through the whole flow (grill, spec, tickets, build, PR review loop) with subagents, stopping at the checkpoints in `docs/agents/checkpoints.md` for the user's direction calls. User-invoked.
 - **[loop-me](./loop-me/SKILL.md)**: Grill yourself into implementable workflow specs over multiple sessions, using the current directory as a stateful workspace. User-invoked.
 - **[writing-beats](./writing-beats/SKILL.md)**: Shape an article as a journey of beats, choose-your-own-adventure style. Pick a starting beat, write only that beat, then pivot to the next, until the article reaches a natural end.
 - **[writing-fragments](./writing-fragments/SKILL.md)**: Grilling session that mines you for fragments (heterogeneous nuggets of writing) and appends them to a single document as raw material for a future article.

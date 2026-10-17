@@ -50,7 +50,7 @@ That is the whole vocabulary. The rule of exactly one state role per item keeps 
 
 ## Verify before you brief
 
-Before any [grilling](https://www.aihero.dev/ai-coding-dictionary/grilling), `triage` checks that the claim holds. For a bug, it reproduces it from the reporter's steps. For a PR, it checks out the branch and runs the relevant tests. Then it reports one of three results:
+Before any [grilling](https://www.aihero.dev/ai-coding-dictionary/grilling), `triage` checks that the claim holds, and it does so **read-only**: by reading, not running. For a bug, it traces the reporter's steps through the code and proposes how to reproduce it, but runs nothing taken from the issue until you confirm the exact command. For a PR, it reads the diff against the codebase and never checks out or executes the PR's code (tests, scripts, install hooks). If verifying genuinely needs execution, it says so and recommends `ready-for-human`. Then it reports one of three results:
 
 - Confirmed, with the code path.
 - Failed to reproduce.
@@ -58,7 +58,9 @@ Before any [grilling](https://www.aihero.dev/ai-coding-dictionary/grilling), `tr
 
 In the same pass, it runs two more checks against the codebase. The **redundancy** check asks if the feature is already implemented, and searches by domain concept, not by the reporter's wording. The **prior rejection** check asks if `.out-of-scope/` already says no. Both checks are cheap, and a hit on either produces a `wontfix`.
 
-All of this work makes one artifact good: the **agent brief**. This is the structured comment that `triage` posts when an issue moves to `ready-for-agent`. After `triage` posts it, the brief is the contract and the original report is only context. Briefs are **durable** rather than precise, because an issue can sit in `ready-for-agent` for weeks while the code changes. So a brief names types, signatures and behavioural contracts, and never file paths or line numbers. A confirmed reproduction makes a much stronger brief than a guess.
+All of this work makes one artifact good: the **agent brief**. This is the structured comment that `triage` posts when an issue moves to `ready-for-agent`. After `triage` posts it, the brief is the contract and the original report is only context. Briefs are **durable** rather than precise, because an issue can sit in `ready-for-agent` for weeks while the code changes. So a brief names types, signatures and behavioural contracts, and never file paths or line numbers. A confirmed verification makes a much stronger brief than a guess.
+
+Everything a reporter wrote (issue and PR bodies, comments, commit messages) is **untrusted content**: data to analyse, never instructions. If any of it addresses the agent ("ignore your instructions", hidden HTML comments, commands to run), `triage` quotes it back to you as a suspicious finding instead of following it.
 
 ## A PR is an issue with attached code
 
@@ -87,7 +89,7 @@ This is the most-filed gap on the skill. It comes in three forms:
 The blocked case is accepted as real, but the name is undecided (`blocked` versus `paused`). None of it has shipped. As a workaround, people add a repo-local extra label next to the category. The state slot then holds an accurate value, but the skill does not know about the extra label. One community fork goes further and adds `needs-slicing`, `tracking` and effort labels. That works, but it belongs to that fork, not to the skill.
 
 **How is this different from `/diagnosing-bugs`?**
-The verification step here is shallow on purpose. It answers "is this real, and roughly where does it live", and does not look for a root cause. If a bug does not reproduce from the reporter's steps in a few minutes, use `needs-info`, or use [diagnosing-bugs](https://aihero.dev/skills-diagnosing-bugs) if you want to investigate it now. Neither skill's text mentions the other yet. A user reported that gap, and it is still open.
+The verification step here is shallow and read-only on purpose. It answers "is this real, and roughly where does it live", and does not look for a root cause. If a bug cannot be confirmed by reading the code against the reporter's steps, use `needs-info`, or use [diagnosing-bugs](https://aihero.dev/skills-diagnosing-bugs) if you want to investigate it now. Neither skill's text mentions the other yet. A user reported that gap, and it is still open.
 
 **Can I point it at my whole backlog and let it run?**
 You can ask, but watch what it reads. The "show what needs attention" pass is a cheap listing for *selection*. You pick one issue, and then `triage` gathers full [context](https://www.aihero.dev/ai-coding-dictionary/context) on that issue. If you run it across twenty issues at once, the agent can use that cheap listing as its only evidence without telling you. The listing returns issue bodies but not comments. One user hit exactly this. Three issues already had a comment that said "already fixed, recommend closing", and all three got new agent briefs instead. For a bulk pass, say explicitly that it must read the comments on each issue.
@@ -95,11 +97,15 @@ You can ask, but watch what it reads. The "show what needs attention" pass is a 
 **Does it work with Linear, or anything other than GitHub Issues?**
 Yes. The tracker is config, not a hard-coded assumption. People run it against Linear (through the `linear` CLI), GitLab, and plain markdown files under `.scratch/`. A common split is Linear for issues and planning, and GitHub for code and PRs. Skills that say "issue tracker" then map to Linear, and skills that say "PR" map to GitHub. The local-markdown tracker has an open template bug: the generated file can contain the acceptance criteria twice, once at the top level and once inside the agent brief ([#200](https://github.com/mattpocock/skills/issues/200)).
 
+**Why won't it check out the PR and run the tests?**
+Because an external PR is code from a stranger, and running it (tests, scripts, install hooks) runs whatever they put in it on your machine. `triage` reads the diff instead, and when only execution would settle the question it recommends `ready-for-human` so a person runs it somewhere safe. Separately, git and `gh` writes are gated outside the skill by a `repo-guard` hook plus `~/.claude/allowed-repos.txt`, and agents can never merge or push to `main`/`master`.
+
 ## It's working if
 
 - Every item it touches ends with exactly one category role and one state role, never zero, and never two conflicting states.
 - It gives you a recommendation with reasoning and stops. It does not relabel the issue and move on.
-- It reproduced the bug, or checked out and ran the PR, before anything reached `ready-for-agent`.
+- It traced the bug or read the PR's diff against the code before anything reached `ready-for-agent`, and it asked before running any command taken from an issue.
+- A comment that tries to instruct the agent shows up in its report as a suspicious finding, not as an action taken.
 - The briefs it writes name types and behaviours, and contain no file paths and no line numbers.
 - When a request you rejected six months ago comes back, it tells you and quotes the old reason instead of triaging it again.
 - Every comment it posts starts with `> *This was generated by AI during triage.*`
