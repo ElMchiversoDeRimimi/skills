@@ -6,7 +6,7 @@ The [agent](https://www.aihero.dev/ai-coding-dictionary/agent) writes the script
 
 ## When to reach for it
 
-You can type `/wizard`, and the agent can also reach for it on its own. When it hits a step you have to take (a key it can't mint, a dashboard it can't click), it builds you a wizard instead of writing the instructions into the chat, where they scroll away.
+You invoke this by typing `/wizard`, and the agent won't reach for it on its own. It handles secrets, so in this fork a human decides when one gets written. When you hit a step only you can take (a key the agent can't mint, a dashboard it can't click), ask for a wizard instead of letting the instructions land in the chat, where they scroll away.
 
 Reach for it when the next thing blocking you is a trip through a dashboard:
 
@@ -22,6 +22,8 @@ Don't reach for it to *decide* what to build; for that, [grill-with-docs](https:
 ## Prerequisites
 
 None to generate one. The wizard it writes runs on bash, and uses `gh` when a stage sets a GitHub secret or variable. If `gh` is missing or not authenticated, the run does not fail. That stage shows a warning, and the closing summary tells you what to set by hand.
+
+The env file it writes must be gitignored. The skill checks with `git check-ignore` before any `.env` write and stops to tell you if it isn't, so captured secrets can't be committed by accident.
 
 ## Stages
 
@@ -44,6 +46,8 @@ For each captured value, scoping decides where it goes:
 The [template](https://github.com/mattpocock/skills/blob/main/skills/engineering/wizard/template.sh) ships the whole experience: progress with time remaining, confirmation gates, cross-platform URL opening including WSL, hidden entry for secrets, idempotent `.env` upserts, `gh secret` / `gh variable` writes, and a closing summary of everything it had to skip. Everything above the `STAGES` marker is a fixed library, identical in every wizard and never hand-edited. Because the library never changes, every wizard behaves the same way. The only work per wizard is to scope the procedure and author its stages.
 
 The agent that writes a wizard never runs it end to end, because the script opens browsers and waits for human input. The agent checks it statically instead: `bash -n`, `shellcheck` where available, and a trace that every value lands where scoping said it would, with every `set_secret` name matching a real `secrets.*` reference in CI. So the first run is yours, and that run is the test.
+
+Before the first GitHub secret or variable is set, the wizard adds a confirmation stage that shows the target repo (`owner/name`), so you see where the secrets land before they go there.
 
 ## Ephemeral by default
 
@@ -72,11 +76,11 @@ Nowhere in particular. It's a standalone, not a chain step. The common guess is 
 
 **Does it work outside Claude Code?**
 
-The script does. It's plain bash, and it runs the same whatever [harness](https://www.aihero.dev/ai-coding-dictionary/harness) generated it. The skill itself is model-invoked, so it's listed everywhere: type `/wizard` in Claude Code or `$wizard` in Codex, or just describe the setup you're stuck on. Being model-invoked also keeps it clear of [#693](https://github.com/mattpocock/skills/issues/693), where Claude's desktop and web apps drop *user-invoked* skills from the [model](https://www.aihero.dev/ai-coding-dictionary/model)'s listing and report them as not installed.
+The script does. It's plain bash, and it runs the same whatever [harness](https://www.aihero.dev/ai-coding-dictionary/harness) generated it. Type `/wizard` in Claude Code or `$wizard` in Codex. Because the skill is user-invoked, it is exposed to [#693](https://github.com/mattpocock/skills/issues/693), where Claude's desktop and web apps drop *user-invoked* skills from the [model](https://www.aihero.dev/ai-coding-dictionary/model)'s listing and report them as not installed; use the CLI if you hit that.
 
-**Didn't this used to be user-invoked?**
+**Why won't the agent reach for it on its own any more?**
 
-It did. It's now model-invoked, so the agent reaches for it unprompted when it hits a step you have to take. Nothing you could do before stopped working. Model invocation lets the agent call the skill as well as you, so `/wizard` behaves as it did. The change fixes one failure. Before, an agent that hit a credentials wall mid-build dumped six numbered steps into the chat for you to follow by hand. Now it writes a wizard.
+Upstream it is model-invoked, so an agent that hits a credentials wall writes a wizard unprompted. This fork makes it user-invoked, because a wizard writes `.env` files and sets GitHub secrets, and that should happen only when a human asks. The cost is the old failure mode: an agent that hits the wall may dump numbered steps into the chat. When it does, type `/wizard`. Separately, git and `gh` writes are gated outside the skill by a `repo-guard` hook plus `~/.claude/allowed-repos.txt`, and agents can never merge or push to `main`/`master`.
 
 **It used to be in `in-progress/`. Where is it now?**
 
@@ -87,6 +91,7 @@ It did. It's now model-invoked, so the agent reaches for it unprompted when it h
 - You're shown an ordered list of stages, and the values each one produces, and asked to confirm, before any script exists.
 - Every URL is opened before the value from that page is asked for. You're never asked to paste something you haven't been sent to fetch.
 - Secrets are typed blind. Nothing sensitive echoes into your scrollback.
+- Before any secret is set, a stage names the target repo and asks you to confirm it.
 - Each stage fits one screen. Nothing you still need has scrolled away.
 - Ctrl-C and re-run picks up where you left off, offering the values already saved as defaults.
 - The final screen lists what it wrote, and separately lists what it couldn't do and you have to finish by hand.
