@@ -42,7 +42,7 @@ Look for the originating spec, in this order:
 
 ### 4. Identify the standards sources
 
-Search the repo for every file that documents how code should be written. When `CODING_STANDARDS.md` or `CONTRIBUTING.md` exists, it must be on the list.
+Search the repo for every file that documents how code should be written. When `CODING_STANDARDS.md` or `CONTRIBUTING.md` exists, it must be on the list. Area specialists' docs (`docs/specialists/*/README.md`) count too: their principles and decisions are standards for their area, and the Spec sub-agent gets them alongside the spec.
 
 On top of whatever the repo documents, the Standards axis always carries the **smell baseline** below: a fixed set of Fowler code smells (_Refactoring_, ch.3) that applies even when a repo documents nothing. Two rules bind it:
 

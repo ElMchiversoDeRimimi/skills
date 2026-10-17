@@ -32,6 +32,8 @@ The skill's leading word is **flow**, a path *through* the skills rather than a 
 - **Standalones**, which sit off every flow and which you use on their own: the prototype, the questionnaire, the research run.
 - **A vocabulary layer underneath**, the two references the other skills pull in when the words rather than the process are the problem.
 
+Area specialists sit beside the flows rather than on them. [new-specialist](https://aihero.dev/skills-new-specialist) is a run-once-per-area setup, like [setup-matt-pocock-skills](https://aihero.dev/skills-setup-matt-pocock-skills); once a specialist exists, the skills on every flow consult it before settling anything in its area.
+
 ## The phase boundary
 
 The skill's other key idea is the **phase boundary**. A phase is a chunk of work inside a session (the [grilling](https://www.aihero.dev/ai-coding-dictionary/grilling), the implementation, the QA), and the boundary between two of them is the only place the question "what do I do with this context?" belongs. Mid-phase there is nothing to decide: continue, or split what is left into [subagents](https://www.aihero.dev/ai-coding-dictionary/subagent).
