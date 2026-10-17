@@ -24,7 +24,7 @@ Communication to and from subagents should be sparse. Communicate primarily thro
 
 2. (optional) Use an **exploration subagent** to conduct any exploration required by the tickets - relevant codebase files or external documentation. Ensure the exploration subagent can save files - it should save its markdown notes in a directory outside the repo, accessible by all future subagents. This lets **implementer subagents** focus on implementation rather than exploration.
 
-3. Create the integration branch. If the issue tracker closes work through PRs, or the user asks for one, open a draft PR after the first merge in step 5 (a branch with no commits ahead of main can't open one), marked as closing the spec and tickets.
+3. Create the integration branch and push it. Open a draft PR to the default branch after the first merge in step 5 (a branch with no commits ahead of main can't open one), marked as closing the spec and tickets. With a local-markdown tracker there is no PR: the user reviews the integration branch locally.
 
 4. Use **implementer subagents** to implement each ticket, each in its own worktree on its own branch. Each implementer subagent:
    - confirms its worktree is based on the integration branch before starting, and resets onto it if not;
@@ -35,8 +35,8 @@ Communication to and from subagents should be sparse. Communicate primarily thro
 
 6. If this changes the **frontier** of available tickets, kick off more **implementer subagents** to work on the new tickets. This allows for maximum concurrency.
 
-7. Once all tickets are complete, call the Skill tool with `code-review` on the integration branch. Fix all issues raised by the code review in a single **implementer subagent**.
+7. Once all tickets are complete, call the Skill tool with `code-review-3axis` on the integration branch; it posts its report on the PR. If the verdict is **Merge-ready: no**, stop and ask the user before touching the `critical` findings. Fix the rest in a single **implementer subagent**, and push.
 
-8. If a draft PR exists, mark it ready for review. Otherwise, resolve each ticket the way the issue tracker closes work, and report the integration branch.
+8. Mark the draft PR ready for review and give the user its link. **The user merges, never you**: don't merge the PR, don't push to the default branch, and don't close tickets by hand (the PR closes them when merged). The user reviews it in the PR or locally (`gh pr checkout <n>`) and leaves comments for `/pr-feedback`.
 
 9. Clean up all **implementer subagent** worktrees.
