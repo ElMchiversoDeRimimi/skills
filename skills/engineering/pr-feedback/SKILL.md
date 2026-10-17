@@ -13,6 +13,8 @@ The issue tracker should have been provided to you. If not, tell the user to run
 
 Stop and ask at every checkpoint in `docs/agents/checkpoints.md` (direction, architecture, new dependencies, human-only steps: recommend `/wizard`, critical findings, merging).
 
+Consult the area specialists listed in `docs/agents/specialists.md` (if it exists) before settling anything in their areas, and have them record area decisions.
+
 **Agent marker.** Everything you post starts with the line `> *Agent:*` (code-review reports start with `## Code review`). Your comments and the user's come from the same account, so the marker is the only way to tell them apart.
 
 ## Steps

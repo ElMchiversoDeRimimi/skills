@@ -56,7 +56,7 @@ Research is the only exception to *one ticket per session*.
 
 ## The checkpoint at the edge of the map
 
-When no open tickets and no fog remain, wayfinder does not hand the map to [to-spec](https://aihero.dev/skills-to-spec) on its own. It shows you the Destination and the Decisions so far and waits for you to confirm. Along the way it also stops at every checkpoint in your repo's `docs/agents/checkpoints.md` (direction, architecture, new dependencies, human-only steps, critical review findings, merging), which [setup-matt-pocock-skills](https://aihero.dev/skills-setup-matt-pocock-skills) writes and you can tune.
+When no open tickets and no fog remain, wayfinder does not hand the map to [to-spec](https://aihero.dev/skills-to-spec) on its own. It shows you the Destination and the Decisions so far and waits for you to confirm. Along the way it also stops at every checkpoint in your repo's `docs/agents/checkpoints.md` (direction, architecture, new dependencies, human-only steps, critical review findings, merging), which [setup-matt-pocock-skills](https://aihero.dev/skills-setup-matt-pocock-skills) writes and you can tune. Where the repo has area specialists (see [new-specialist](https://aihero.dev/skills-new-specialist)), it consults them before settling a decision in their area and has them record the resolution in their doc.
 
 ## Common questions
 

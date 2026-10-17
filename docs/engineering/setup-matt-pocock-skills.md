@@ -22,6 +22,7 @@ It writes into the repo you run it in:
 | `domain.md` | `docs/agents/` |
 | `triage-labels.md` | `docs/agents/`, only when the `triage` skill is installed |
 | `checkpoints.md` | `docs/agents/` |
+| `specialists.md` | `docs/agents/`, an empty registry of area specialists |
 | `checks.yml` | `.github/workflows/`, only on GitHub, when there is code and no workflow already runs the checks on PRs |
 | An `## Agent skills` block | whichever of `CLAUDE.md` or `AGENTS.md` already exists |
 
@@ -52,7 +53,11 @@ The first three ship as templates in the skill and work out of the box. Local ma
 
 ## Checkpoints
 
-Setup also writes `docs/agents/checkpoints.md` from a seed, without asking. It is the list of moments every agent stops and asks you before going on: a change of direction, an architecture decision worth an ADR, a new dependency, a human-only step (credentials, dashboards, payment, where the agent recommends [wizard](https://aihero.dev/skills-wizard)), a critical review finding, and merging, which is always yours. Routine work inside an agreed ticket (branches, commits, PRs, fixing minor review findings) never stops. You tune how much control you keep by editing the file, in the draft or later, and every skill reads it. The `## Agent skills` block gains a Checkpoints pointer to it.
+Setup also writes `docs/agents/checkpoints.md` from a seed, without asking. It is the list of moments every agent stops and asks you before going on: a change of direction, an architecture decision worth an ADR, a new dependency, a human-only step (credentials, dashboards, payment, where the agent recommends [wizard](https://aihero.dev/skills-wizard)), a critical review finding, an area that keeps coming up with no specialist (where the agent recommends [new-specialist](https://aihero.dev/skills-new-specialist) and never creates one itself), and merging, which is always yours. Routine work inside an agreed ticket (branches, commits, PRs, fixing minor review findings) never stops. You tune how much control you keep by editing the file, in the draft or later, and every skill reads it. The `## Agent skills` block gains a Checkpoints pointer to it.
+
+## Specialists
+
+Setup also writes `docs/agents/specialists.md`, without asking: the registry of area specialists, empty until [new-specialist](https://aihero.dev/skills-new-specialist) adds a row. It tells every skill to consult a listed area's specialist before settling anything in that area, and to have it record the decisions that land. A re-run leaves an existing registry's table alone, and the `## Agent skills` block gains a Specialists pointer to it.
 
 ## CI
 
@@ -87,7 +92,7 @@ It doesn't. `docs/agents/triage-labels.md` is a *mapping*: it tells `/triage` wh
 
 **Can I configure the other skills' behaviour here ([grilling](https://www.aihero.dev/ai-coding-dictionary/grilling) cadence, question format, tone)?**
 
-No. It configures tracker, labels, doc layout, checkpoints and CI. Users have asked to make it the place for per-user preferences. The answer is that skills stay opinionated and take no per-user config. Preferences belong in your `CLAUDE.md` as plain instructions, which every skill already reads.
+No. It configures tracker, labels, doc layout, checkpoints, the specialists registry and CI. Users have asked to make it the place for per-user preferences. The answer is that skills stay opinionated and take no per-user config. Preferences belong in your `CLAUDE.md` as plain instructions, which every skill already reads.
 
 **Can I keep the config in `~/.claude` instead of committing it to every repo?**
 
@@ -99,7 +104,7 @@ One long-standing complaint says yes, in these words: *"having a skill to set up
 
 ## It's working if
 
-- `docs/agents/issue-tracker.md`, `docs/agents/domain.md` and `docs/agents/checkpoints.md` exist, plus `triage-labels.md` if `triage` is installed.
+- `docs/agents/issue-tracker.md`, `docs/agents/domain.md`, `docs/agents/checkpoints.md` and `docs/agents/specialists.md` exist, plus `triage-labels.md` if `triage` is installed.
 - On a GitHub repo with code, PRs show a `checks` run, or you were shown a proposed workflow.
 - An `## Agent skills` section appears in the instruction file your harness reads, with a one-line summary pointing at each of those files.
 - The tracker it proposed matches the remote you use, and the label strings match labels that exist in your tracker.
