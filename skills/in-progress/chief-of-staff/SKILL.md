@@ -42,4 +42,4 @@ Finally, create environments (and codebases) that obey the **"no workarounds"** 
 - No one-off workarounds, or hacks that bypass established processes
 - Any deviations from conventions must be fixed proactively, before feature work is done
 
-Be relentless in improving the environment. Use every user message as an excuse to search for these improvements.
+Be relentless in proposing environment improvements, and apply each one only once the user agrees. Never request access to production systems or data.

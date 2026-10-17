@@ -22,79 +22,20 @@ If you want to keep up with changes to these skills, and any new ones I create, 
 
 [Sign Up To The Newsletter](https://www.aihero.dev/s/skills-newsletter)
 
-## Installation (30-second setup)
+## Installation (hardened fork)
 
-A plugin updates itself. [skills.sh](https://skills.sh/mattpocock/skills) copies editable files into your project, and you update them by hand. Pick one per agent, because installing both gives you every skill twice.
+This fork is installed per repo, never globally, and never through a self-updating channel: no plugin marketplace, no `npx skills`. Updates arrive only when you `git pull` this fork, so every change is one you reviewed.
 
-### 1. Get the skills
-
-<details>
-<summary><strong>Claude Code</strong></summary>
+### 1. Enable the skills in one repo
 
 ```bash
-claude plugin install mattpocock-skills@claude-plugins-official
+scripts/enable-skills.sh <path-to-repo>            # every skill except git-guardrails
+scripts/enable-skills.sh <path-to-repo> tdd grilling  # or just the ones named
 ```
 
-Updates itself by default.
+The script copies the skills into `<repo>/.claude/skills/` (and the `researcher` agent into `<repo>/.claude/agents/`), and keeps both out of git via `.git/info/exclude`. Re-run it after pulling this fork to refresh the copies; `scripts/enable-skills.sh --remove <path-to-repo>` takes them out again.
 
-</details>
-
-<details>
-<summary><strong>Codex</strong></summary>
-
-```bash
-codex plugin marketplace add mattpocock/skills
-codex plugin add mattpocock-skills@mattpocock
-```
-
-Updates itself at startup.
-
-</details>
-
-<details>
-<summary><strong>GitHub Copilot</strong> (CLI and VS Code)</summary>
-
-```bash
-copilot plugin marketplace add mattpocock/skills
-copilot plugin install mattpocock-skills@mattpocock
-```
-
-Then, once, add to `~/.copilot/settings.json`:
-
-```json
-{
-  "extraKnownMarketplaces": {
-    "mattpocock": { "source": { "source": "github", "repo": "mattpocock/skills" }, "autoUpdate": true }
-  }
-}
-```
-
-In VS Code, run **Chat: Install Plugin From Source** and enter `https://github.com/mattpocock/skills`. It updates daily.
-
-</details>
-
-<details>
-<summary><strong>Gemini CLI</strong> (manual updates)</summary>
-
-```bash
-gemini skills install https://github.com/mattpocock/skills.git --path skills/engineering
-gemini skills install https://github.com/mattpocock/skills.git --path skills/productivity
-```
-
-Re-run both commands to update.
-
-</details>
-
-<details>
-<summary><strong>Any other agent, or editable files</strong> (manual updates)</summary>
-
-```bash
-npx skills@latest add mattpocock/skills -a <agent>  # cursor, opencode, devin, windsurf, amp, pi; omit -a to choose
-```
-
-When the installer asks which skills to take, include `setup-matt-pocock-skills`. To update, run `npx skills@latest update`, and re-run `add` to pick up new skills.
-
-</details>
+Git and `gh` writes are gated outside the skills, by the `repo-guard` hook and `~/.claude/allowed-repos.txt`: an agent can only write to a repo you listed there.
 
 ### 2. Run `/setup-matt-pocock-skills`
 
@@ -227,6 +168,8 @@ Skills I use daily for code work.
 - **[implement-spec](./skills/engineering/implement-spec/SKILL.md)**: Implement a whole spec on one integration branch. Works the tickets as a task graph, running implementer subagents across the ready frontier for maximum concurrency, then closes out with `/code-review`.
 - **[wayfinder](./skills/engineering/wayfinder/SKILL.md)**: Plan a huge chunk of work, more than one agent session can hold, as a shared map of decision tickets on the issue tracker, and resolve them one at a time until the way to the destination is clear.
 - **[retro](./skills/engineering/retro/SKILL.md)**: Suggest improvements to the coding agent's environment (navigation, automated checks, coding standards, steering files, tooling) after a session, most severe first.
+- **[pr](./skills/engineering/pr/SKILL.md)**: The shape a pull request body should take: a summary as the smallest visual that makes the change clear, before/after evidence that it works, and a merge-danger call (one-way or two-way door, plus blast radius).
+- **[wizard](./skills/engineering/wizard/SKILL.md)**: Generate an interactive bash wizard that walks a human through steps only they can perform: provisioning infrastructure, setting up credentials or CI secrets, walking an unfamiliar third-party dashboard, or running a one-off migration or cutover.
 
 **Model-invoked**
 
@@ -237,8 +180,6 @@ Skills I use daily for code work.
 - **[domain-modeling](./skills/engineering/domain-modeling/SKILL.md)**: Actively build and sharpen a project's domain model: challenge terms against the glossary, stress-test with edge-case scenarios, and update `GLOSSARY.md` and ADRs inline.
 - **[codebase-design](./skills/engineering/codebase-design/SKILL.md)**: Shared discipline and vocabulary for designing deep modules: a lot of behaviour behind a small interface, placed at a clean seam, testable through that interface.
 - **[code-review](./skills/engineering/code-review/SKILL.md)**: Two-axis review of the diff since a fixed point: **Standards** (does it follow the repo's coding standards, plus a Fowler smell baseline?) and **Spec** (does it faithfully implement the originating issue/spec?), run as parallel sub-agents so neither pollutes the other.
-- **[pr](./skills/engineering/pr/SKILL.md)**: The shape a pull request body should take: a summary as the smallest visual that makes the change clear, before/after evidence that it works, and a merge-danger call (one-way or two-way door, plus blast radius).
-- **[wizard](./skills/engineering/wizard/SKILL.md)**: Generate an interactive bash wizard that walks a human through steps only they can perform: provisioning infrastructure, setting up credentials or CI secrets, walking an unfamiliar third-party dashboard, or running a one-off migration or cutover.
 
 ### Productivity
 
