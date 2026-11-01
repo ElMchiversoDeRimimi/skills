@@ -9,6 +9,7 @@ When an agent working in this repo stops and asks the user before going on. The 
 - **New dependencies**: adding a package, service, or third-party API.
 - **Human-only steps**: anything needing credentials, a dashboard, payment, or a manual action. Stop and recommend `/wizard` for it; never invent values or leave the step half done.
 - **Critical review findings**: a `code-review-3axis` verdict of **Merge-ready: no**.
+- **New specialist**: an area keeps coming up with no specialist. Recommend `/new-specialist <area>`; never create one yourself.
 - **Merging**: the user merges every PR. Agents open and update PRs, never merge them, and never push to the default branch.
 
 ## Never stop for

@@ -18,6 +18,8 @@ Communication to and from subagents should be sparse. Communicate primarily thro
 
 Stop and ask at every checkpoint in `docs/agents/checkpoints.md` (direction, architecture, new dependencies, human-only steps: recommend `/wizard`, critical findings, merging). Pass this rule on to every subagent: a subagent that hits a checkpoint reports back instead of deciding.
 
+Consult the area specialists listed in `docs/agents/specialists.md` (if it exists) before settling anything in their areas, and have them record area decisions. Implementer subagents report area questions back to you; you consult the specialist.
+
 **Implementer subagents** should be run in the background where possible for maximum concurrency.
 
 ## Steps

@@ -21,7 +21,7 @@ When you type it without a fixed point, it reviews against `main` and says so. W
 
 ## Prerequisites
 
-The Standards axis needs nothing. It reads whatever the repo documents (`CODING_STANDARDS.md`, `CONTRIBUTING.md`, and the like) and falls back on a built-in baseline when the repo documents nothing. The Bugs & Security axis needs nothing either: it reads the code.
+The Standards axis needs nothing. It reads whatever the repo documents (`CODING_STANDARDS.md`, `CONTRIBUTING.md`, and the like) and falls back on a built-in baseline when the repo documents nothing. Area specialists' docs (`docs/specialists/<area>/README.md`, written by [new-specialist](https://aihero.dev/skills-new-specialist)) count as standards too: their principles and decisions are the rules for their area, and the Spec sub-agent reads them alongside the spec. The Bugs & Security axis needs nothing either: it reads the code.
 
 The Spec axis needs a spec to exist and be findable. It looks in this order:
 

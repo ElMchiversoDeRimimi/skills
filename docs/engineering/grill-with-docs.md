@@ -26,6 +26,8 @@ The skill writes into your repo, so you need to be somewhere it is safe to write
 
 It also needs two other skills present, because its own `SKILL.md` is one line that delegates to them. [grilling](https://aihero.dev/skills-grilling) supplies the interview, and [domain-modeling](https://aihero.dev/skills-domain-modeling) supplies the writing. Installing `grill-with-docs` alone gets you a skill that does not work.
 
+If the repo has area specialists (see [new-specialist](https://aihero.dev/skills-new-specialist)), it inherits their use from `grilling`: facts in a listed area come from that area's specialist, its recommendations show up tagged `(specialist: <area>)`, and area decisions land in the specialist's doc alongside the glossary and ADRs. Without specialists, nothing changes.
+
 ## The paper trail
 
 Three things come out of a session, and they are not equal.

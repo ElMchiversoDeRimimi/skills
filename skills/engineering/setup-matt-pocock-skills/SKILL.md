@@ -12,6 +12,7 @@ Scaffold the per-repo configuration that the engineering skills assume:
 - **Triage labels**: the strings used for the five canonical triage roles
 - **Domain docs**: where `GLOSSARY.md` and ADRs live, and the consumer rules for reading them
 - **Checkpoints**: when agents stop and ask the user (direction, architecture, dependencies, human-only steps, critical review findings, merging)
+- **Specialists**: the registry of area specialists (empty until `/new-specialist` adds one) and how skills consult them
 - **CI**: a workflow that runs the repo's checks on every PR, so the reviewer sees pass/fail on the PR itself
 
 This is a prompt-driven skill, not a deterministic script. Explore, present what you found, confirm with the user, then write.
@@ -67,12 +68,14 @@ Offer **multi-context** (a root `GLOSSARY-MAP.md` pointing to per-context `GLOSS
 
 **Section E: CI** (GitHub tracker only). If a workflow already runs the checks on PRs, skip. Otherwise, if the repo has code, propose `.github/workflows/checks.yml` from the [ci-github.md](./ci-github.md) seed, filled with the repo's real commands. If there is no code yet, write no workflow; `/to-tickets` makes adding CI the first ticket.
 
+**Section F: Specialists.** Write `docs/agents/specialists.md` from the [specialists.md](./specialists.md) seed without asking. If the file already exists, leave its table alone.
+
 ### 3. Confirm and edit
 
 Show the user a draft of:
 
 - The `## Agent skills` block to add to whichever of `CLAUDE.md` / `AGENTS.md` is being edited (see step 4 for selection rules)
-- The contents of `docs/agents/issue-tracker.md`, `docs/agents/domain.md`, `docs/agents/checkpoints.md`, and `docs/agents/triage-labels.md` (the last only when `triage` is installed)
+- The contents of `docs/agents/issue-tracker.md`, `docs/agents/domain.md`, `docs/agents/checkpoints.md`, `docs/agents/specialists.md`, and `docs/agents/triage-labels.md` (the last only when `triage` is installed)
 - The CI workflow, when Section E proposed one
 
 Let them edit before writing.
@@ -109,6 +112,10 @@ The block:
 ### Checkpoints
 
 Agents do the work; they stop and ask the user at every checkpoint in `docs/agents/checkpoints.md`, and never merge.
+
+### Specialists
+
+Area specialists own their area's knowledge; consult them per `docs/agents/specialists.md`.
 ```
 
 Include the `### Triage labels` sub-block, and write `docs/agents/triage-labels.md`, only when `triage` is installed and Section B ran. When it isn't, both are omitted.
@@ -124,6 +131,7 @@ Then write the docs files using the seed templates in this skill folder as a sta
 - [domain.md](./domain.md): domain doc consumer rules + layout
 - [checkpoints.md](./checkpoints.md): when agents stop and ask
 - [ci-github.md](./ci-github.md): the CI workflow seed (GitHub only)
+- [specialists.md](./specialists.md): the specialists registry
 
 For "other" issue trackers, write `docs/agents/issue-tracker.md` from scratch using the user's description.
 

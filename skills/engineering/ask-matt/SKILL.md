@@ -55,6 +55,10 @@ A starting situation that generates work, then merges onto the main flow.
 
   When the map clears, **it hands off, it doesn't build**: merge onto the main flow at **`/to-spec`**, which collapses the map's linked decisions into a buildable plan, then `/to-tickets` and `/implement` as usual. Looping the map straight into `/implement` skips that collapse and throws the linked detail away, so go straight to `/implement` only when the effort turned out genuinely small.
 
+## Area specialists
+
+As a project grows, areas appear (product, game design, systems) whose knowledge shouldn't depend on whichever session is open. A **specialist** is a project subagent that owns one area's docs (`docs/specialists/<area>/`), answers from a fresh context, and records area decisions as they land. The skills consult them through `docs/agents/specialists.md`: in a `/grill-with-docs` round, a specialist's recommendation shows up tagged `(specialist: <area>)`, and you still decide. Create one with **`/new-specialist <area>`** when an area keeps coming up; agents only recommend it.
+
 ## Codebase health
 
 Not feature work, just upkeep.

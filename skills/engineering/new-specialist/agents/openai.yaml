@@ -1,0 +1,5 @@
+interface:
+  display_name: "New Specialist"
+  short_description: "Create an area specialist that owns its docs"
+policy:
+  allow_implicit_invocation: false
